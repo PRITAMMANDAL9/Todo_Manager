@@ -126,15 +126,22 @@
 
     <h1>Welcome back</h1>
     <p class="muted">Log in to manage your tasks</p>
-
-    <form id="loginForm" novalidate>
+<p id="errormessage" 
+   style="margin-top: 0; 
+          font-size: 0.8rem; 
+          color: red; 
+          font-weight: bold;">
+   ${errormassage}
+</p>
+    <!-- The form is now configured to submit directly -->
+    <form id="loginForm" method="post" action="login">
       <div class="field">
         <div class="label"><label for="email">Email</label></div>
         <input class="input" id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
       </div>
 
       <div class="field">
-        <div class="label"><label for="password">Password</label><a class="link" href="#" id="togglePwd">Show</a></div>
+        <div class="label"><label for="password">Password</label><a class="link" href="#">Show</a></div>
         <input class="input" id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" minlength="6" required />
         <div class="error" id="pwdError" aria-live="polite"></div>
       </div>
@@ -149,58 +156,12 @@
       <div class="or">or</div>
 
       <div class="alt">
+        <!-- The button below still needs JavaScript to handle its logic -->
         <button type="button" class="btn" id="demoLogin">Continue with Demo</button>
       </div>
 
       <div class="footer">Do not have an account? <a class="link" href="#">Create one</a></div>
     </form>
   </main>
-
-  <script>
-    const form = document.getElementById('loginForm');
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const pwdError = document.getElementById('pwdError');
-    const togglePwd = document.getElementById('togglePwd');
-
-    togglePwd.addEventListener('click', (e) => {
-      e.preventDefault();
-      const isPwd = password.type === 'password';
-      password.type = isPwd ? 'text' : 'password';
-      togglePwd.textContent = isPwd ? 'Hide' : 'Show';
-    });
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      pwdError.textContent = '';
-
-      if (!email.value.trim()) {
-        email.focus();
-        return;
-      }
-      if (!password.value || password.value.length < 6) {
-        pwdError.textContent = 'Password must be at least 6 characters.';
-        password.focus();
-        return;
-      }
-
-      // TODO: Replace with your backend endpoint (e.g., /api/auth/login)
-      // Example fetch:
-      // const res = await fetch('/api/auth/login', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email: email.value, password: password.value, remember: document.getElementById('remember').checked })
-      // });
-      // const data = await res.json();
-      // if (res.ok) { window.location.href = '/app'; } else { pwdError.textContent = data.message || 'Invalid credentials.'; }
-
-      alert('Demo only: hook this up to your backend.');
-    });
-
-    document.getElementById('demoLogin').addEventListener('click', () => {
-      email.value = 'demo@todo.app';
-      password.value = 'demopass';
-    });
-  </script>
 </body>
 </html>
