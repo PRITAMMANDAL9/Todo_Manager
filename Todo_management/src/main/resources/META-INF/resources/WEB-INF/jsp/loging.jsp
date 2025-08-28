@@ -8,160 +8,181 @@
   <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.3.3/css/bootstrap.min.css'/>">
   <style>
     :root {
-      --bg: #0f172a;          /* slate-900 */
-      --card: #111827;        /* gray-900 */
-      --muted: #94a3b8;       /* slate-400 */
-      --text: #e5e7eb;        /* gray-200 */
-      --primary: #6366f1;     /* indigo-500 */
-      --primary-600: #5457ef; /* indigo-600 */
-      --ring: rgba(99,102,241,.35);
-      --error: #ef4444;       /* red-500 */
+      --bg: #f9fafb;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --text: #111827;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca; 
+      --error: #dc2626;
+      --border: #e5e7eb;
     }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
     body {
       margin: 0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: radial-gradient(1000px 600px at 80% -20%, rgba(99,102,241,.25), transparent 60%),
-                  radial-gradient(800px 500px at -10% 110%, rgba(20,184,166,.18), transparent 60%),
-                  var(--bg);
-      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
       display: grid;
       place-items: center;
-      padding: 24px;
+      height: 100vh;
+      color: var(--text);
     }
 
     .card {
       width: 100%;
       max-width: 420px;
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      backdrop-filter: blur(6px);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.05);
     }
 
+    /* === TM LOGO STYLE === */
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 18px;
+      justify-content: center;
+      margin-bottom: 20px;
     }
-    .brand__logo {
-      width: 36px; height: 36px;
-      display: grid; place-items: center;
-      border-radius: 11px;
-      background: conic-gradient(from 180deg at 50% 50%, #22d3ee, #6366f1 40%, #22c55e 75%, #22d3ee);
-      color: white; font-weight: 800;
-      text-shadow: 0 1px 2px rgba(0,0,0,.25);
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), #9333ea);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: "Segoe UI", sans-serif;
+      letter-spacing: 1px;
     }
-    .brand__name { font-weight: 700; letter-spacing: .2px; }
 
-    h1 { margin: 0 0 4px 0; font-size: 22px; }
-    p.muted { margin: 0 0 18px 0; color: var(--muted); font-size: 14px; }
+    h1 {
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
 
-    .field { margin-bottom: 14px; }
-    .label { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; color: var(--muted); }
+    p.muted {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .field { margin-bottom: 16px; }
+    .label { font-size: 13px; margin-bottom: 6px; color: var(--muted); }
 
     .input {
       width: 100%;
       padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid rgba(148,163,184,.25);
-      background: rgba(17,24,39,.65);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
       color: var(--text);
       outline: none;
-      transition: box-shadow .15s ease, border-color .15s ease, transform .06s ease;
+      transition: border-color .15s, box-shadow .15s;
     }
     .input:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 4px var(--ring);
+      box-shadow: 0 0 0 3px rgba(79,70,229,0.2);
     }
 
-    .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 8px 0 16px; }
-    .checkbox { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); cursor: pointer; }
-    .checkbox input { width: 16px; height: 16px; }
-
-    .link { color: var(--text); text-decoration: none; font-size: 13px; opacity: .9; }
-    .link:hover { text-decoration: underline; }
+    .row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin: 10px 0 18px; }
+    .checkbox { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; color: var(--muted); }
 
     .btn {
       width: 100%;
-      padding: 12px 14px;
-      border-radius: 12px;
+      padding: 12px;
+      border-radius: 8px;
       border: none;
-      background: linear-gradient(180deg, var(--primary), var(--primary-600));
+      background: var(--primary);
       color: white;
       font-weight: 600;
-      letter-spacing: .3px;
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(99,102,241,.35);
-      transition: transform .06s ease, box-shadow .15s ease;
+      transition: background .2s ease;
     }
-    .btn:active { transform: translateY(1px); box-shadow: 0 6px 14px rgba(99,102,241,.3); }
+    .btn:hover { background: var(--primary-hover); }
+
+    .error {
+      color: var(--error);
+      font-size: 13px;
+      margin-top: 4px;
+      min-height: 18px;
+    }
 
     .or {
-      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; margin: 14px 0;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 18px 0;
+      font-size: 12px;
+      color: var(--muted);
     }
-    .or::before, .or::after { content: ""; height: 1px; background: rgba(148,163,184,.25); }
-
-    .alt {
-      display: grid; gap: 10px; grid-template-columns: 1fr;
+    .or::before, .or::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      margin: 0 10px;
     }
-    .alt button { background: rgba(17,24,39,.65); border: 1px solid rgba(148,163,184,.25); color: var(--text); box-shadow: none; }
 
-    .error { color: var(--error); font-size: 13px; margin: 6px 0 0; min-height: 18px; }
-    .footer { margin-top: 18px; text-align: center; color: var(--muted); font-size: 12px; }
+    .alt button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .alt button:hover { background: #f3f4f6; }
+
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .footer a { color: var(--primary); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <main class="card" role="main">
-    <div class="brand" aria-label="App Brand">
-      <div class="brand__logo" aria-hidden="true">✓</div>
-      <span class="brand__name">TODO Manager</span>
+  <main class="card">
+    <div class="brand">
+      <div class="logo">TM</div>
     </div>
 
-    <h1>Welcome back</h1>
-    <p class="muted">Log in to manage your tasks</p>
-<p id="errormessage" 
-   style="margin-top: 0; 
-          font-size: 0.8rem; 
-          color: red; 
-          font-weight: bold;">
-   ${errormassage}
-</p>
-    <!-- The form is now configured to submit directly -->
+    <h1>Sign in to your account</h1>
+    <p class="muted">Manage your tasks efficiently</p>
+
+    <p id="errormessage" class="error">${errormassage}</p>
+
     <form id="loginForm" method="post" action="login">
       <div class="field">
         <div class="label"><label for="email">Email</label></div>
-        <input class="input" id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+        <input class="input" id="email" name="email" type="email" placeholder="you@example.com" required />
       </div>
 
       <div class="field">
-        <div class="label"><label for="password">Password</label><a class="link" href="#">Show</a></div>
-        <input class="input" id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" minlength="6" required />
-        <div class="error" id="pwdError" aria-live="polite"></div>
+        <div class="label"><label for="password">Password</label></div>
+        <input class="input" id="password" name="password" type="password" placeholder="••••••••" required minlength="6" />
       </div>
 
       <div class="row">
         <label class="checkbox"><input type="checkbox" id="remember" name="remember" /> Remember me</label>
-        <a class="link" href="#">Forgot password?</a>
+        <a href="#" style="font-size: 13px; color: var(--primary);">Forgot password?</a>
       </div>
 
       <button class="btn" type="submit">Sign in</button>
 
-      <div class="or">or</div>
+      <div class="or">or continue with</div>
 
       <div class="alt">
-        <!-- The button below still needs JavaScript to handle its logic -->
-        <button type="button" class="btn" id="demoLogin">Continue with Demo</button>
+        <button type="button">Continue with Demo</button>
       </div>
 
-      <div class="footer">Do not have an account? <a class="link" href="#">Create one</a></div>
+      <div class="footer">Don’t have an account? <a href="#">Create one</a></div>
     </form>
   </main>
-  <script src="<c:url value='/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js'/>"></script>
 </body>
 </html>

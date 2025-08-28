@@ -46,30 +46,44 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 18px;
+      justify-content: center;
+      margin-bottom: 20px;
     }
+
+    /* Stylish TM Logo */
     .brand__logo {
-      width: 36px; height: 36px;
-      display: grid; place-items: center;
-      border-radius: 11px;
+      width: 48px; 
+      height: 48px;
+      display: grid; 
+      place-items: center;
+      border-radius: 12px;
       background: conic-gradient(from 180deg at 50% 50%, #22d3ee, #6366f1 40%, #22c55e 75%, #22d3ee);
-      color: white; font-weight: 800;
+      color: white; 
+      font-weight: 800;
+      font-size: 18px;
+      font-family: "Segoe UI", sans-serif;
+      letter-spacing: -0.5px;
       text-shadow: 0 1px 2px rgba(0,0,0,.25);
     }
-    .brand__name { font-weight: 700; letter-spacing: .2px; }
+
+    .brand__name { 
+      font-weight: 700; 
+      font-size: 20px;
+      letter-spacing: .3px; 
+      margin-left: 10px;
+    }
 
     h1 { margin: 0 0 4px 0; font-size: 22px; }
     p.muted { margin: 0 0 18px 0; color: var(--muted); font-size: 14px; }
 
     .welcome-card {
       text-align: center;
-      padding: 50px 28px;
+      padding: 40px 28px;
     }
 
     .welcome-card .brand__name {
       margin-bottom: 20px;
-      font-size: 2rem;
+      font-size: 1.5rem;
     }
 
     #welcomeMessage {
@@ -78,7 +92,6 @@
       margin-top: 0;
     }
 
-    /* Button styles */
     .btn {
       display: inline-block;
       margin-top: 20px;
@@ -101,17 +114,15 @@
 <body>
   <main class="card welcome-card">
     <div class="brand" aria-label="App Brand">
-      <div class="brand__logo" aria-hidden="true">✓</div>
+      <div class="brand__logo">TM</div>
       <span class="brand__name">TODO Manager</span>
     </div>
     
-    <h1 id="welcomeMessage">Welcome in todo manager</h1>
+    <h1 id="welcomeMessage">Welcome to TODO Manager</h1>
     
     <p id="userEmail" style="margin-top: 0; font-size: 1.2rem; color: var(--muted);">${email}</p>
 
-    <!-- New Create Todo Button -->
-    <a href="manage-todo" class="btn">Manage Your Todo </a>
-
+    <a href="manage-todo" class="btn">Manage Your Todos</a>
   </main>
   <script src="<c:url value='/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js'/>"></script>
  </body>
