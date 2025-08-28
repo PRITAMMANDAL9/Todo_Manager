@@ -1,25 +1,21 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome • TODO Manager</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.3.3/css/bootstrap.min.css'/>">
   <style>
-    /*
-      Reusing the base styles for a consistent look and feel.
-    */
     :root {
-      --bg: #0f172a;          /* slate-900 */
-      --card: #111827;        /* gray-900 */
-      --muted: #94a3b8;       /* slate-400 */
-      --text: #e5e7eb;        /* gray-200 */
-      --primary: #6366f1;     /* indigo-500 */
-      --primary-600: #5457ef; /* indigo-600 */
+      --bg: #0f172a;
+      --card: #111827;
+      --muted: #94a3b8;
+      --text: #e5e7eb;
+      --primary: #6366f1;
+      --primary-600: #5457ef;
       --ring: rgba(99,102,241,.35);
-      --error: #ef4444;       /* red-500 */
+      --error: #ef4444;
     }
 
     * { box-sizing: border-box; }
@@ -66,21 +62,39 @@
     h1 { margin: 0 0 4px 0; font-size: 22px; }
     p.muted { margin: 0 0 18px 0; color: var(--muted); font-size: 14px; }
 
-    /* Custom styles for the welcome page */
     .welcome-card {
-        text-align: center;
-        padding: 50px 28px;
+      text-align: center;
+      padding: 50px 28px;
     }
 
     .welcome-card .brand__name {
-        margin-bottom: 20px;
-        font-size: 2rem;
+      margin-bottom: 20px;
+      font-size: 2rem;
     }
 
     #welcomeMessage {
       font-size: 1.5rem;
       font-weight: 500;
       margin-top: 0;
+    }
+
+    /* Button styles */
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      background: var(--primary);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+    .btn:hover {
+      background: var(--primary-600);
     }
   </style>
 </head>
@@ -95,6 +109,10 @@
     
     <p id="userEmail" style="margin-top: 0; font-size: 1.2rem; color: var(--muted);">${email}</p>
 
+    <!-- New Create Todo Button -->
+    <a href="manage-todo" class="btn">Manage Your Todo </a>
+
   </main>
-</body>
+  <script src="<c:url value='/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js'/>"></script>
+ </body>
 </html>
