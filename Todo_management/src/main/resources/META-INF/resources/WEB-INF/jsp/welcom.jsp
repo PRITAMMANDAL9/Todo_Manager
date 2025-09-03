@@ -90,7 +90,11 @@
     </div>
     
     <h1 id="welcomeMessage">Welcome to TODO Manager</h1>
-    <p id="userEmail" style="margin-top: 0; font-size: 1.1rem; color: var(--muted);">${email}</p>
+   <p id="userName" style="margin-top: 0; font-size: 2.1rem; color: var(--muted);text-align: center;">
+  ${userName}
+</p>
+
+
 
     <a href="manage-todo" class="btn">Manage Your Todos</a>
   </main>
