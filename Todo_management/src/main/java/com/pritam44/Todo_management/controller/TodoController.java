@@ -1,4 +1,4 @@
-package com.pritam44.Todo_management.hello_controllar;
+package com.pritam44.Todo_management.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

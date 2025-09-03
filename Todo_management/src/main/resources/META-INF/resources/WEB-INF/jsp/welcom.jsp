@@ -1,31 +1,22 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<%@ include file ="common/header.jspf" %>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome • TODO Manager</title>
- <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.3.3/css/bootstrap.min.css'/>">
+  <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.3.3/css/bootstrap.min.css'/>">
   <style>
     :root {
-      --bg: #0f172a;
-      --card: #111827;
-      --muted: #94a3b8;
-      --text: #e5e7eb;
+      --bg: #ffffff;   /* White background */
+      --card: #f9fafb; /* Soft gray card */
+      --muted: #6b7280;
+      --text: #1f2937;
       --primary: #6366f1;
-      --primary-600: #5457ef;
-      --ring: rgba(99,102,241,.35);
-      --error: #ef4444;
+      --primary-600: #4f46e5;
     }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
     body {
       margin: 0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: radial-gradient(1000px 600px at 80% -20%, rgba(99,102,241,.25), transparent 60%),
-                  radial-gradient(800px 500px at -10% 110%, rgba(20,184,166,.18), transparent 60%),
-                  var(--bg);
+      background: var(--bg);
       color: var(--text);
       display: grid;
       place-items: center;
@@ -35,12 +26,12 @@
     .card {
       width: 100%;
       max-width: 420px;
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.08);
+      background: var(--card);
+      border: 1px solid #e5e7eb;
       border-radius: 20px;
       padding: 28px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      backdrop-filter: blur(6px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.08);
+      margin-top: 80px; /* pushes below navbar */
     }
 
     .brand {
@@ -66,34 +57,7 @@
       text-shadow: 0 1px 2px rgba(0,0,0,.25);
     }
 
-    .brand__name { 
-      font-weight: 700; 
-      font-size: 20px;
-      letter-spacing: .3px; 
-      margin-left: 10px;
-    }
-
-    h1 { margin: 0 0 4px 0; font-size: 22px; }
-    p.muted { margin: 0 0 18px 0; color: var(--muted); font-size: 14px; }
-
-    .welcome-card {
-      text-align: center;
-      padding: 40px 28px;
-    }
-
-    .welcome-card .brand__name {
-      margin-bottom: 20px;
-      font-size: 1.5rem;
-    }
-
-    #welcomeMessage {
-      font-size: 1.5rem;
-      font-weight: 500;
-      margin-top: 0;
-    }
-
     .btn {
-      display: inline-block;
       margin-top: 20px;
       padding: 12px 24px;
       font-size: 1rem;
@@ -104,14 +68,21 @@
       border-radius: 12px;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.2s ease;
+      transition: background 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 4px 12px rgba(99,102,241,0.25);
     }
     .btn:hover {
       background: var(--primary-600);
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
+
+  <!-- Navigation Bar -->
+ <%@ include file = "common/navigation.jspf" %>
+
+  <!-- Welcome Card -->
   <main class="card welcome-card">
     <div class="brand" aria-label="App Brand">
       <div class="brand__logo">TM</div>
@@ -119,11 +90,14 @@
     </div>
     
     <h1 id="welcomeMessage">Welcome to TODO Manager</h1>
-    
-    <p id="userEmail" style="margin-top: 0; font-size: 1.2rem; color: var(--muted);">${email}</p>
+    <p id="userEmail" style="margin-top: 0; font-size: 1.1rem; color: var(--muted);">${email}</p>
 
     <a href="manage-todo" class="btn">Manage Your Todos</a>
   </main>
+
   <script src="<c:url value='/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js'/>"></script>
- </body>
+</body>
 </html>
+
+
+
