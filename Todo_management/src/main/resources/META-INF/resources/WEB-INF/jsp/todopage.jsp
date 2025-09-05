@@ -18,6 +18,10 @@
 
   <!-- Main Content -->
   <div class="container">
+ <p id="UserName" style="margin-top: 0; font-size: 1.5rem; color: var(--bs-primary); font-weight: var(--bs-font-weight-bold);">
+  ${UserName}
+</p>
+
     <h1>Your Todos</h1>
     <table class="table table-striped table-bordered">
       <thead class="table-light">
