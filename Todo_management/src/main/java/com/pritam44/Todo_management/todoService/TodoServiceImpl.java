@@ -8,19 +8,19 @@ import java.util.stream.Collectors;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//import com.pritam44.Todo_management.Exception.InternalServiceException;
-//import com.pritam44.Todo_management.Exception.InvalidTodoDataException;
-//import com.pritam44.Todo_management.Exception.TodoNotFoundException;
+import com.pritam44.Todo_management.Exception.InternalServiceException;
+import com.pritam44.Todo_management.Exception.InvalidTodoDataException;
+import com.pritam44.Todo_management.Exception.TodoNotFoundException;
 import com.pritam44.Todo_management.dto.TodoDto;
-//import com.pritam44.Todo_management.entity.Todo;
+import com.pritam44.Todo_management.entity.Todo;
 //import com.pritam44.Todo_management.mapperUtil.MapperUtil;
 //import com.pritam44.Todo_management.repository.TodoRepositoryImpl;
-//
-//
+
+
 @Service
 public class TodoServiceImpl  {
 	
-	
+		
 	
 //	@Service
 //	public class TodoServiceImpl implements TodoService {
@@ -82,7 +82,7 @@ public class TodoServiceImpl  {
 //            existingTodo.setCompleted(todoDto.isCompleted());
 //            existingTodo.setDueDate(todoDto.getDueDate());
 //            existingTodo.setPriority(todoDto.getPriority());
-//            existingTodo.setUserId(todoDto.getUserId());
+//			  existingTodo.setUserName(todoDto.getUserName());
 //
 //            Todo updatedTodo = todoRepository.save(existingTodo);
 //            return MapperUtil.toDto(updatedTodo);

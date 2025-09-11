@@ -1,26 +1,20 @@
 package com.pritam44.Todo_management.entity;
 
 import java.time.LocalDateTime;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "todos")
 public class Todo {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false) // title is required
+    @Column(nullable = false) 
     private String title;
 
-    @Column(length = 1000) // description is optional, with max length
+    @Column(length = 1000) 
     private String description;
 
     @Column(nullable = false)
@@ -33,52 +27,89 @@ public class Todo {
 
     @Column(length = 20)
     private String priority; // LOW, MEDIUM, HIGH
+    
+    @Column(nullable = false)
+    private String userName;
 
-    private Long userId; // optional, if multi-user support
-
-    // Constructors
     public Todo() {}
 
     public Todo(String title, String description, boolean completed,
-                LocalDateTime createdDate, LocalDateTime dueDate,
-                String priority, Long userId) {
+                LocalDateTime dueDate, String priority, String userName) {
         this.title = title;
         this.description = description;
         this.completed = completed;
-        this.createdDate = createdDate;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.userId = userId;
+        this.userName = userName;
     }
 
-    // Getters & Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    
+    public Long getId() {
+		return id;
+	}
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+	public String getTitle() {
+		return title;
+	}
 
-    public boolean isCompleted() { return completed; }
-    public void setCompleted(boolean completed) { this.completed = completed; }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public LocalDateTime getCreatedDate() { return createdDate; }
-    public void setCreatedDate(LocalDateTime createdDate) { this.createdDate = createdDate; }
+	public String getDescription() {
+		return description;
+	}
 
-    public LocalDateTime getDueDate() { return dueDate; }
-    public void setDueDate(LocalDateTime dueDate) { this.dueDate = dueDate; }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getPriority() { return priority; }
-    public void setPriority(String priority) { this.priority = priority; }
+	public boolean isCompleted() {
+		return completed;
+	}
 
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
 
-    @PrePersist
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public LocalDateTime getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(LocalDateTime dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	@PrePersist
     protected void onCreate() {
         this.createdDate = LocalDateTime.now();
     }
 }
-
