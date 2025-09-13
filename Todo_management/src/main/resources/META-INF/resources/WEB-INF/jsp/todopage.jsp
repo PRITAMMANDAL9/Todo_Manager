@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="common/header.jspf" %>
 
@@ -57,7 +58,6 @@
                   </c:choose>
                 </td>
                 <td>
-                  <!-- show only date portion of createdDate if present -->
                   <c:choose>
                     <c:when test="${not empty todo.createdDate}">
                       ${fn:substringBefore(todo.createdDate, 'T')}
@@ -66,9 +66,9 @@
                   </c:choose>
                 </td>
                 <td>
-                  <!-- show only date portion of dueDate (no time) -->
                   <c:choose>
                     <c:when test="${not empty todo.dueDate}">
+                      <!-- show only date portion for table; full value will be used for edit -->
                       ${fn:substringBefore(todo.dueDate, 'T')}
                     </c:when>
                     <c:otherwise>-</c:otherwise>
@@ -96,8 +96,7 @@
                     </button>
                   </form>
 
-                  <!-- Edit button: fill modal -->
-                  <c:set var="dueStr" value="${not empty todo.dueDate ? fn:substringBefore(todo.dueDate,'T') : ''}" />
+                  <!-- Edit button: pass full todo.dueDate (may include time). JS will normalize -->
                   <button
                     class="btn btn-sm btn-outline-primary"
                     data-bs-toggle="modal"
@@ -105,7 +104,7 @@
                     data-id="${todo.id}"
                     data-title="${fn:escapeXml(todo.title)}"
                     data-desc="${fn:escapeXml(todo.description)}"
-                    data-due="${dueStr}"
+                    data-due="${not empty todo.dueDate ? fn:escapeXml(todo.dueDate) : ''}"
                     data-priority="${todo.priority}">
                     Edit
                   </button>
@@ -127,10 +126,10 @@
     </div>
   </div>
 
-  <!-- Add Todo Modal -->
+  <!-- SINGLE Add Todo Modal (uses datetime-local) -->
   <div class="modal fade" id="addTodoModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <form method="post" action="${pageContext.request.contextPath}/todos/add">
+    <div class="modal-dialog modal-lg">
+      <form action="${pageContext.request.contextPath}/todos/add" method="post">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <div class="modal-content">
           <div class="modal-header">
@@ -140,122 +139,11 @@
           <div class="modal-body">
             <div class="mb-3">
               <label class="form-label">Title</label>
-              <input type="text" name="title" class="form-control" required />
+              <input type="text" name="title" required class="form-control" />
             </div>
             <div class="mb-3">
               <label class="form-label">Description</label>
               <textarea name="description" class="form-control" rows="3"></textarea>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Due Date</label>
-              <input type="date" name="dueDate" class="form-control" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Priority</label>
-              <select name="priority" class="form-select">
-                <option value="LOW">LOW</option>
-                <option value="MEDIUM">MEDIUM</option>
-                <option value="HIGH">HIGH</option>
-              </select>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Add</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Edit Todo Modal -->
-  <div class="modal fade" id="editTodoModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <form id="editForm" method="post" action="#">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Edit Todo</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <input type="hidden" id="edit-id" name="id" />
-            <div class="mb-3">
-              <label class="form-label">Title</label>
-              <input type="text" id="edit-title" name="title" class="form-control" required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Description</label>
-              <textarea id="edit-desc" name="description" class="form-control" rows="3"></textarea>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Due Date</label>
-              <input type="date" id="edit-due" name="dueDate" class="form-control" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Priority</label>
-              <select id="edit-priority" name="priority" class="form-select">
-                <option value="LOW">LOW</option>
-                <option value="MEDIUM">MEDIUM</option>
-                <option value="HIGH">HIGH</option>
-              </select>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- script to populate edit modal -->
-  <script>
-    var editModal = document.getElementById('editTodoModal');
-    editModal.addEventListener('show.bs.modal', function (event) {
-      var button = event.relatedTarget;
-      var id = button.getAttribute('data-id');
-      var title = button.getAttribute('data-title') || '';
-      var desc = button.getAttribute('data-desc') || '';
-      var due = button.getAttribute('data-due') || '';
-      var priority = button.getAttribute('data-priority') || 'LOW';
-
-      // set form action to correct URL
-      var form = document.getElementById('editForm');
-      form.action = `${pageContext.request.contextPath}/todos/${id}/edit`;
-
-      // fill inputs
-      document.getElementById('edit-id').value = id;
-      document.getElementById('edit-title').value = title;
-      document.getElementById('edit-desc').value = desc;
-      document.getElementById('edit-due').value = due; // date in yyyy-MM-dd
-      document.getElementById('edit-priority').value = priority;
-    });
-  </script>
-
-</body>
-</html>
-
-
-  <!-- Add Todo Modal -->
-  <div class="modal fade" id="addTodoModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <form action="${pageContext.request.contextPath}/todos/add" method="post">
-          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-          <div class="modal-header">
-            <h5 class="modal-title">Add Todo</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label class="form-label">Title</label>
-              <input name="title" required class="form-control" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Description</label>
-              <textarea name="description" rows="3" class="form-control"></textarea>
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
@@ -275,25 +163,27 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Save</button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
 
-  <!-- Edit Todo Modal (populated by JS) -->
+  <!-- SINGLE Edit Todo Modal (populated by JS) -->
   <div class="modal fade" id="editTodoModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
+        <!-- JS will set action to ctx + '/todos/{id}/edit' -->
         <form id="editTodoForm" method="post">
           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
           <div class="modal-header">
             <h5 class="modal-title">Edit Todo</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <input type="hidden" name="id" id="edit-id" />
+            <!-- hidden id kept for convenience but controller uses path variable -->
+            <input type="hidden" id="edit-id" name="id" />
             <div class="mb-3">
               <label class="form-label">Title</label>
               <input id="edit-title" name="title" required class="form-control" />
@@ -305,6 +195,7 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label">Due</label>
+                <!-- datetime-local for edits too -->
                 <input id="edit-due" name="dueDate" class="form-control" type="datetime-local" />
               </div>
               <div class="col-md-6 mb-3">
@@ -319,7 +210,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary">Save changes</button>
+            <button class="btn btn-primary" type="submit">Save changes</button>
           </div>
         </form>
       </div>
@@ -328,35 +219,48 @@
 
   <script src="<c:url value='/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js'/>"></script>
 
+  <!-- safe context path for JS -->
   <script>
-    // Populate Edit modal from button data-* attributes
-    const editModal = document.getElementById('editTodoModal');
-    editModal && editModal.addEventListener('show.bs.modal', function (event) {
-      const button = event.relatedTarget;
-      const id = button.getAttribute('data-id');
-      const title = button.getAttribute('data-title') || '';
-      const desc = button.getAttribute('data-desc') || '';
-      const due = button.getAttribute('data-due') || '';
-      const priority = button.getAttribute('data-priority') || 'LOW';
+    const ctx = '${pageContext.request.contextPath}';
+  </script>
 
-      document.getElementById('edit-id').value = id;
-      document.getElementById('edit-title').value = title;
-      document.getElementById('edit-desc').value = desc;
+  <!-- Populate Edit modal from button data-* attributes and set form action -->
+  <script>
+    (function () {
+      const editModalEl = document.getElementById('editTodoModal');
+      if (!editModalEl) return;
 
-      // convert ISO datetime to input datetime-local if possible (strip seconds)
-      if (due) {
-        // expecting ISO like "2025-09-05T14:30" or "2025-09-05T14:30:00"
-        let v = due;
-        if (v.length > 16) v = v.substring(0,16);
-        document.getElementById('edit-due').value = v;
-      } else {
-        document.getElementById('edit-due').value = '';
-      }
-      document.getElementById('edit-priority').value = priority;
+      editModalEl.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const id = button.getAttribute('data-id');
+        const title = button.getAttribute('data-title') || '';
+        const desc = button.getAttribute('data-desc') || '';
+        const due = button.getAttribute('data-due') || '';
+        const priority = button.getAttribute('data-priority') || 'LOW';
 
-      // set form action to /todos/{id}/edit
-      document.getElementById('editTodoForm').action = `${window.location.origin}${pageContext.request.contextPath}/todos/${id}/edit`;
-    });
+        // populate fields
+        document.getElementById('edit-id').value = id;
+        document.getElementById('edit-title').value = title;
+        document.getElementById('edit-desc').value = desc;
+
+        // Normalize ISO datetime to datetime-local value (yyyy-MM-ddTHH:mm)
+        // incoming due might be "2025-09-05T14:30", "2025-09-05T14:30:00", or ""
+        if (due) {
+          let v = due;
+          // if contains seconds (length > 16), trim to first 16 chars
+          if (v.length > 16) v = v.substring(0,16);
+          document.getElementById('edit-due').value = v;
+        } else {
+          document.getElementById('edit-due').value = '';
+        }
+
+        document.getElementById('edit-priority').value = priority;
+
+        // set form action using ctx so id becomes path variable
+        const form = document.getElementById('editTodoForm');
+        form.action = ctx + '/todos/' + id + '/edit';
+      });
+    })();
   </script>
 </body>
 </html>

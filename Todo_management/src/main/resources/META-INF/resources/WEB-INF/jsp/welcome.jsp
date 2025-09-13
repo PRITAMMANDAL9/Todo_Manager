@@ -96,7 +96,8 @@
 
 
 
-    <a href="manage-todo" class="btn">Manage Your Todos</a>
+ <a href="<c:url value='/manage-todo'/>" class="btn">Manage Your Todos</a>
+
   </main>
 
   <script src="<c:url value='/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js'/>"></script>
