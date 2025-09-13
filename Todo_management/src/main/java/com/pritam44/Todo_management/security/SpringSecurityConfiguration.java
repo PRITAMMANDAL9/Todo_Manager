@@ -35,16 +35,17 @@ public class SpringSecurityConfiguration {
         http
             .authenticationProvider(daoAuthProvider())
             .authorizeHttpRequests(auth -> auth
-            		.requestMatchers(
-            			    "/login", "/do-login", "/logout",
-            			    "/css/**", "/js/**", "/images/**", "/webjars/**"
-            			).permitAll()
+                .requestMatchers(
+                    "/login", "/do-login", "/logout",        // auth endpoints
+                    "/css/**", "/js/**", "/images/**", "/webjars/**",
+                    "/WEB-INF/jsp/**"                        // ✅ allow JSP views
+                ).permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/login")
-                .loginProcessingUrl("/do-login")
-                .defaultSuccessUrl("/welcome", true)   // <-- FIXED: use /welcome
+                .loginPage("/login")                        // GET -> show login.jsp
+                .loginProcessingUrl("/do-login")            // POST -> handled by Spring Security
+                .defaultSuccessUrl("/welcome", true)        // ✅ fixed path
                 .failureUrl("/login?error=true")
                 .permitAll()
             )
