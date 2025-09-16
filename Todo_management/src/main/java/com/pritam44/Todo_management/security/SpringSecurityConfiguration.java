@@ -36,7 +36,7 @@ public class SpringSecurityConfiguration {
             .authenticationProvider(daoAuthProvider())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/login", "/do-login", "/logout",        // auth endpoints
+                    "/login", "/do-login", "/logout", "/signup",       // auth endpoints
                     "/css/**", "/js/**", "/images/**", "/webjars/**",
                     "/WEB-INF/jsp/**"                        // ✅ allow JSP views
                 ).permitAll()
@@ -50,10 +50,10 @@ public class SpringSecurityConfiguration {
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout=true")
-                .permitAll()
-            );
+            	    .logoutUrl("/logout")
+            	    .logoutSuccessUrl("/logout-success")  // redirect to JSP page
+            	    .permitAll()
+            	);
 
         return http.build();
     }

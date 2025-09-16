@@ -16,4 +16,12 @@ public class LoginController {
         }
         return "login";
     }
-}
+    
+        @GetMapping("/logout-success")
+        public String logoutPage() {
+            return "logout"; // maps to logout.jsp
+        }
+        
+    }
+
+

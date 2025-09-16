@@ -4,7 +4,7 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <title>Login • TODO Manager</title>
+  <title>Sign Up • TODO Manager</title>
   <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.3.3/css/bootstrap.min.css'/>">
   <style>
     body { 
@@ -12,12 +12,12 @@
       align-items:center; 
       justify-content:center; 
       height:100vh; 
-      background:linear-gradient(135deg, #6366f1, #22d3ee);
+      background:linear-gradient(135deg, #22d3ee, #6366f1);
       margin:0; 
       font-family: "Segoe UI", Roboto, Arial, sans-serif;
     }
     .card { 
-      max-width:420px; 
+      max-width:460px; 
       width:100%; 
       padding:2rem; 
       background:#fff; 
@@ -34,7 +34,7 @@
       font-weight:700; 
       font-size:28px; 
       margin-bottom:20px;
-      color:#4f46e5;
+      color:#22c55e;
     }
     .error { 
       color:#dc2626; 
@@ -49,27 +49,27 @@
       text-align:center;
     }
     .btn-primary {
-      background:#6366f1; 
+      background:#22c55e; 
       border:none; 
       border-radius:10px; 
       padding:10px; 
       font-weight:600;
     }
     .btn-primary:hover {
-      background:#4f46e5;
+      background:#16a34a;
     }
-    .signup-link { 
+    .login-link { 
       display:block; 
       margin-top:18px; 
       text-align:center; 
       font-size:0.95rem;
     }
-    .signup-link a {
+    .login-link a {
       color:#6366f1;
       font-weight:600;
       text-decoration:none;
     }
-    .signup-link a:hover {
+    .login-link a:hover {
       text-decoration:underline;
     }
   </style>
@@ -77,20 +77,20 @@
 <body>
   <main class="card">
     <!-- Brand / Title -->
-    <div class="brand">TODO Manager</div>
+    <div class="brand">Create Your Account</div>
 
     <!-- Error / Success messages -->
     <c:if test="${param.error != null}">
-      <div class="error" role="alert">Invalid username or password.</div>
+      <div class="error" role="alert">Something went wrong. Try again.</div>
     </c:if>
-    <c:if test="${param.logout != null}">
-      <div class="success" role="status">You have been logged out.</div>
+    <c:if test="${param.success != null}">
+      <div class="success" role="status">Account created successfully! Please login.</div>
     </c:if>
 
-    <!-- Login Form -->
-    <form method="post" action="<c:url value='/do-login'/>" autocomplete="on">
+    <!-- Signup Form -->
+    <form method="post" action="<c:url value='/signup'/>" autocomplete="on">
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-      
+
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input id="username" name="username" class="form-control" type="text" required autocomplete="username" />
@@ -98,16 +98,21 @@
 
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input id="password" name="password" class="form-control" type="password" required autocomplete="current-password" />
+        <input id="password" name="password" class="form-control" type="password" required autocomplete="new-password" />
       </div>
 
-      <button type="submit" class="btn btn-primary w-100">Sign In</button>
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <input id="confirmPassword" name="confirmPassword" class="form-control" type="password" required autocomplete="new-password" />
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Create Account</button>
     </form>
 
-    <!-- Sign up link -->
-    <div class="signup-link">
-      <span>New to TODO Manager?</span>
-      <a href="<c:url value='/signup'/>">Create an Account</a>
+    <!-- Back to login link -->
+    <div class="login-link">
+      <span>Already have an account?</span>
+      <a href="<c:url value='/login'/>">Sign in</a>
     </div>
   </main>
 </body>

@@ -9,7 +9,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="<c:url value='/'/>">Home</a>
+            <a class="nav-link" href="<c:url value='/welcome'/>">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="<c:url value='/manage-todo'/>">Manage Todos</a>
@@ -18,7 +18,7 @@
             <a class="nav-link" href="#">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-danger" href=<c:url value='/logout'/>>Logout</a>
+            <a class="nav-link text-danger" href=<c:url value='/logout-success'/>>Logout</a>
           </li>
         </ul>
       </div>

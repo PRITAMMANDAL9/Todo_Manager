@@ -10,7 +10,7 @@ public class BcryptGenerator implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        String rawPassword = "pritam@123"; // change if needed
+        String rawPassword = ""; // change if needed
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String hashed = encoder.encode(rawPassword);
 
